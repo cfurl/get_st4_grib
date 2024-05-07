@@ -1,0 +1,7 @@
+# Scraper part from NCEP
+
+docker build -t cfurl/get_st4_grib .
+
+
+docker run -it --rm -v //c/py_learn/dock_me:/home cfurl/get_st4_grib:v1
+
