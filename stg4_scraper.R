@@ -38,14 +38,17 @@ source_path<-paste0("https://nomads.ncep.noaa.gov/pub/data/nccf/com/pcpanl/prod/
 
 # create download destination
 
-#destination_path<-paste0(getwd(), "/",tail(grib2_available,n=1))
-destination_path<-paste0(getwd(),"/",tail(grib2_available,n=1))
-#destination_path<-paste0("C:\\py_learn\\dock_scrape\\03_output","/",tail(grib2_available,n=1))
+destination_path<-paste0("/output/",tail(grib2_available,n=1))
+#destination_path<-paste0(getwd(),"/",tail(grib2_available,n=1))
+
 
 #download the file  
 download.file (source_path,destination_path,method = "libcurl")
 
 # Write your shell file to communicate with the wgrib2 container
 txt<- paste("wgrib2", tail(grib2_available,n=1), "-csv",  str_replace(tail(grib2_available,n=1), ".grb2", ".txt"))
-writeLines(txt,paste0(getwd(),"/wgrib2_commands.sh"))
-#writeLines(txt,paste0("C:/home/03_output","/wgrib2_commands.sh"))
+#writeLines(txt,paste0(getwd(),"/wgrib2_commands.sh"))
+writeLines(txt,paste0("/output","/wgrib2_commands.sh"))
+
+
+

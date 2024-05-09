@@ -5,3 +5,14 @@ docker build -t cfurl/get_st4_grib .
 
 docker run -it --rm -v //c/py_learn/dock_me:/home cfurl/get_st4_grib:v1
 
+docker run -it cfurl/get_st4_grib
+
+#create a network
+docker network create st4_net
+
+docker run -it --network st4_net cfurl/get_st4_grib
+
+docker run -it --network st4_net --network-alias cfurl/get_st4_grib
+
+docker image tag cfurl/get_st4_grib cfurl/get_st4_grib:v2
+
