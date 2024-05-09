@@ -1,0 +1,2 @@
+figure out networking so you can just link containers without having the intermediary volume mounts
+fix the timestamp problem; currently scripts don't work at 7pm local time because you're in between utc days.
