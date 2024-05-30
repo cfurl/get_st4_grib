@@ -1,18 +1,73 @@
 # Scraper part from NCEP
 
+# build your docker image
+# This is on docker.io tagged as v1.
+
 docker build -t cfurl/get_st4_grib .
 
+# This command pulls from the registry, and stores the .grb2 and .sh in the 'output' folder of the docker container
+# To view files you can use the docker desktop to see that they are there
+
+docker run -it cfurl/get_st4_grib:v1
+
+# If you want to write the .grb2 and .sh locally then you mount the container output folder to a local folder (here "dock_me")
+# Notice here I have it remove container after it's done.  I don't need it hanging around since the data is written locally
+# and not residing in the container like previous example
 
 docker run -it --rm -v //c/py_learn/dock_me:/output cfurl/get_st4_grib:v1
 
-docker run -it cfurl/get_st4_grib
+# Run the container with docker compose
+# A very simple .yml file.  In this example, navigate to the location of .yml file, run 'docker-compose up' and the .grb2 and .sh
+# will be written to 'C:/py_learn/yo
+
+services:
+  
+  scraper:
+    image: cfurl/get_st4_grib:v1
+    container_name: scraper
+    volumes: 
+        - //c/py_learn/yo:/output
+
+
+# Run the container with docker compose and have the files get stored in container (not locally)
+
+services:
+  
+  scraper:
+    image: cfurl/get_st4_grib:v1
+    container_name: scraper
+
+
 
 #create a network
+
 docker network create st4_net
 
-docker run -it --network st4_net cfurl/get_st4_grib
+docker run -it --network st4_net cfurl/get_st4_grib:v1
 
-docker run -it --network st4_net --network-alias cfurl/get_st4_grib
 
-docker image tag cfurl/get_st4_grib cfurl/get_st4_grib:v2
+services:
+  
+  scraper:
+    image: cfurl/get_st4_grib:v1
+    container_name: scraper
+    networks:
+      - st4_net
+      
+networks:
+  st4_net:
+    external:
+        name: st4_net
+
+
+
+
+
+
+
+
+
+
+
+
 
